@@ -1,13 +1,28 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>News</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">News</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <!-- Loading Indicator -->
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+
+  <!-- News List -->
+  <ion-list *ngIf="!isLoading && news.length > 0">
+    <ion-item *ngFor="let article of news">
+      <ion-thumbnail slot="start" *ngIf="article.image_url">
+        <img [src]="article.image_url" alt="News Image" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- No News Found -->
+  <div *ngIf="!isLoading && news.length === 0" class="no-news">
+    <p>No news articles found for {{ country }}.</p>
+  </div>
 </ion-content>

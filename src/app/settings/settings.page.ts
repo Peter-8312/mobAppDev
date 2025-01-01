@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonList, IonItem, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonList, IonItem, IonSelect, IonSelectOption, IonRadio, IonRadioGroup } from '@ionic/angular/standalone';
 import { DataService } from '../services/data.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { DataService } from '../services/data.service';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [IonItem, IonList, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonSelect, IonSelectOption]
+  imports: [IonRadio, IonItem, IonList, IonLabel, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonRadioGroup]
 })
 export class SettingsPage implements OnInit {
   units: string[] = ['Metric', 'Standard', 'Imperial']; // Available units

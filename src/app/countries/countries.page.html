@@ -1,18 +1,29 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>Countries</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class="ion-padding">
   <ion-list>
     <ion-item *ngFor="let country of countries">
+      <!-- Country Flag -->
+      <ion-thumbnail slot="start">
+        <img [src]="country.flags?.png" alt="Flag of {{ country.name?.official }}" />
+      </ion-thumbnail>
+
+      <!-- Country Official Name -->
       <ion-label>
-        <h2>{{ country.name.official }}</h2>
-        <p>{{ country.region }}</p>
+        <h2>{{ country.name?.official }}</h2>
       </ion-label>
-      <ion-button (click)="openNews(country)">News</ion-button>
-      <ion-button (click)="openWeather(country)">Weather</ion-button>
+
+      <!-- Buttons for News and Weather -->
+      <ion-button expand="block" color="primary" (click)="openNews(country)">
+        News
+      </ion-button>
+      <ion-button expand="block" color="secondary" (click)="openWeather(country)">
+        Weather
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

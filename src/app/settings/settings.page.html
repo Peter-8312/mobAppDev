@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>Settings</ion-title>
   </ion-toolbar>
@@ -6,13 +6,19 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item>
-      <ion-label>Preferred Unit</ion-label>
-      <ion-select [(ngModel)]="selectedUnit" (ionChange)="saveSettings()">
-        <ion-select-option *ngFor="let unit of units" [value]="unit">
-          {{ unit }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
+    <ion-radio-group [(ngModel)]="selectedUnit" (ionChange)="saveSettings()">
+      <ion-item>
+        <ion-label>Metric</ion-label>
+        <ion-radio slot="start" value="Metric"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Standard</ion-label>
+        <ion-radio slot="start" value="Standard"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Imperial</ion-label>
+        <ion-radio slot="start" value="Imperial"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
   </ion-list>
 </ion-content>

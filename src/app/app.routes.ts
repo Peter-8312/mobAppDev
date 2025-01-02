@@ -26,4 +26,10 @@ export const routes: Routes = [
     path: 'weather',
     loadComponent: () => import('./weather/weather.page').then((m) => m.WeatherPage),
   },
+
+  {
+    path: '**', // Wildcard Route
+    redirectTo: 'home', // Redirect invalid paths to Home
+  },
+  
 ];

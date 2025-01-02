@@ -11,8 +11,8 @@
 
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-label>Enter Country</ion-label>
-    <ion-input [(ngModel)]="searchQuery" placeholder="Country Name"></ion-input>
+    <ion-label position="stacked">Enter Country</ion-label>
+    <ion-input  name="countryName" [(ngModel)]="searchQuery" placeholder="Country Name"></ion-input>
   </ion-item>
 
   <ion-button expand="block" (click)="searchCountries()">Search</ion-button>

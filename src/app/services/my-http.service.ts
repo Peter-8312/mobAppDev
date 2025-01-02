@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { CapacitorHttp, HttpOptions } from '@capacitor/core';
+import { firstValueFrom } from 'rxjs';
 
 
 
@@ -17,21 +18,49 @@ export class MyHttpService {
 
   constructor(private http: HttpClient) { }
 
-  getCountriesByName(name: string): Observable<any> {
+  // Wrapper for CapacitorHttp.get
+  public async get(options: HttpOptions): Promise<any> {
+    return await CapacitorHttp.get(options);
+  }
+
+  // Fetch countries by name
+  public async getCountriesByName(name: string): Promise<any> {
     const url = `${this.restCountriesBaseUrl}/name/${name}`;
-    console.log('Fetching countries from:', url); // Debug log
-    return this.http.get(url);
+    if (this.isNativePlatform()) {
+      const options: HttpOptions = { url };
+      const response = await this.get(options); // Use wrapper method
+      return response.data;
+    } else {
+      return firstValueFrom(this.http.get(url)); // Fallback for web
+    }
   }
 
-  getCountryNews(country: string): Observable<any> {
+  // Fetch news by country
+  public async getCountryNews(country: string): Promise<any> {
     const url = `${this.newsDataBaseUrl}?apikey=${this.newsApiKey}&q=${country}`;
-    console.log('Fetching news from:', url); // Debug log
-    return this.http.get(url);
+    if (this.isNativePlatform()) {
+      const options: HttpOptions = { url };
+      const response = await this.get(options); // Use wrapper method
+      return response.data;
+    } else {
+      return firstValueFrom(this.http.get(url));
+    }
   }
 
-  getWeather(lat: number, lon: number, units: string): Observable<any> {
+  // Fetch weather by coordinates
+  public async getWeather(lat: number, lon: number, units: string): Promise<any> {
     const url = `${this.openWeatherBaseUrl}/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${this.weatherApiKey}`;
-    console.log('Fetching weather from:', url); // Debug log
-    return this.http.get(url);
+    if (this.isNativePlatform()) {
+      const options: HttpOptions = { url };
+      const response = await this.get(options); // Use wrapper method
+      return response.data;
+    } else {
+      return firstValueFrom(this.http.get(url));
+    }
+  }
+
+  // Helper to check if running on a native platform
+  private isNativePlatform(): boolean {
+    return CapacitorHttp && CapacitorHttp.get !== undefined;
   }
 }

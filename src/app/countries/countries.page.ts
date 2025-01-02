@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonLabel, IonItem, IonList, IonThumbnail } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonLabel, IonItem, IonList, IonThumbnail, IonCardContent, IonCardTitle, IonCardHeader, IonCard } from '@ionic/angular/standalone';
+import { RouterModule } from '@angular/router';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MyHttpService } from '../services/my-http.service';
 
@@ -10,7 +11,7 @@ import { MyHttpService } from '../services/my-http.service';
   templateUrl: './countries.page.html',
   styleUrls: ['./countries.page.scss'],
   standalone: true,
-  imports: [IonList, IonItem, IonLabel, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonThumbnail, CommonModule, FormsModule]
+  imports: [IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterModule]
 })
 export class CountriesPage implements OnInit {
   countries: any[] = []; //stores list of countries
@@ -32,17 +33,14 @@ export class CountriesPage implements OnInit {
   });
 }
 
-loadCountries() {
-  // Use MyHttpService to fetch countries by name
-  this.myHttp.getCountriesByName(this.query).subscribe(
-    (data: any) => {
-      this.countries = data; // Assign data to countries array
-    },
-    (error) => {
-      console.error('Error fetching countries:', error);
-      this.countries = []; //clear the list if errors
-    }
-  );
+async loadCountries() {
+  try {
+    const data = await this.myHttp.getCountriesByName(this.query);
+    this.countries = data || []; // Assign data to countries array
+  } catch (error) {
+    console.error('Error fetching countries:', error);
+    this.countries = []; // Clear the list if there are errors
+  }
 }
 
 

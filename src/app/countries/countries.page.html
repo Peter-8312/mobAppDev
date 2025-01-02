@@ -1,29 +1,32 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Countries</ion-title>
+    <ion-title>{{ query || 'Countries' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item *ngFor="let country of countries">
-      <!-- Country Flag -->
-      <ion-thumbnail slot="start">
-        <img [src]="country.flags?.png" alt="Flag of {{ country.name?.official }}" />
-      </ion-thumbnail>
+    <!-- Display Each Country Using ion-card -->
+    <ion-card *ngFor="let country of countries">
+      <ion-card-header>
+        <!-- Country Name -->
+        <ion-card-title>{{ country.name?.official }}</ion-card-title>
+      </ion-card-header>
 
-      <!-- Country Official Name -->
-      <ion-label>
-        <h2>{{ country.name?.official }}</h2>
-      </ion-label>
+      <ion-card-content>
+        <!-- Country Flag -->
+          <img [src]="country.flags?.png" alt="Flag of {{ country.name?.official }}" class="country-flag" />
 
-      <!-- Buttons for News and Weather -->
-      <ion-button expand="block" color="primary" (click)="openNews(country)">
-        News
-      </ion-button>
-      <ion-button expand="block" color="secondary" (click)="openWeather(country)">
-        Weather
-      </ion-button>
-    </ion-item>
+        <!-- Buttons for News and Weather -->
+        <div class="button-group">
+          <ion-button expand="block" color="primary" (click)="openNews(country)">
+            News
+          </ion-button>
+          <ion-button expand="block" color="secondary" (click)="openWeather(country)">
+            Weather
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </ion-list>
 </ion-content>

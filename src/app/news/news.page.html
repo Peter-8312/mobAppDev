@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>News</ion-title>
+    <ion-title>News from {{ country }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,21 +8,32 @@
   <!-- Loading Indicator -->
   <ion-spinner *ngIf="isLoading"></ion-spinner>
 
-  <!-- News List -->
-  <ion-list *ngIf="!isLoading && news.length > 0">
-    <ion-item *ngFor="let article of news">
-      <ion-thumbnail slot="start" *ngIf="article.image_url">
-        <img [src]="article.image_url" alt="News Image" />
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ article.title }}</h2>
-        <p>{{ article.description }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
-  <!-- No News Found -->
-  <div *ngIf="!isLoading && news.length === 0" class="no-news">
-    <p>No news articles found for {{ country }}.</p>
+  <!-- Display message if no news is found -->
+  <div *ngIf="!isLoading && news.length === 0" class="no-news-message">
+    No news found for {{ country }}.
   </div>
+
+
+  <!-- Display news articles -->
+  <ion-list *ngIf="news.length > 0">
+    <ion-card *ngFor="let article of news">
+      <!-- News Image -->
+      <img *ngIf="article.image_url" [src]="article.image_url" alt="Image for {{ article.title }}" class="news-image" />
+
+      <ion-card-header>
+        <!-- News Title -->
+        <ion-card-title>{{ article.title }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <!-- News Description -->
+        <p>{{ article.description || 'No description available.' }}</p>
+
+        <!-- Link to Full Article -->
+        <ion-button expand="block" color="primary" [href]="article.link" target="_blank">
+          Read More
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>

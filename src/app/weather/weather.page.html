@@ -1,13 +1,26 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>Weather</ion-title>
+    <ion-title>Weather for {{ capital }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Weather</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <!-- Loading Indicator -->
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+
+  <!-- Weather Information -->
+  <div *ngIf="!isLoading && weather" class="weather-info">
+    <img
+      [src]="'https://openweathermap.org/img/wn/' + weather.weather[0].icon + '@4x.png'"
+      alt="Weather Icon"
+      class="weather-icon"
+    />
+    <h2 class="weather-description">{{ weather.weather[0].description | titlecase }}</h2>
+    <p class="weather-temp">Temperature: {{ weather.main.temp }}° {{ units | titlecase }}</p>
+  </div>
+
+  <!-- No Weather Found -->
+  <div *ngIf="!isLoading && !weather" class="no-weather">
+    <p>Unable to fetch weather data for {{ capital }}.</p>
+  </div>
 </ion-content>
